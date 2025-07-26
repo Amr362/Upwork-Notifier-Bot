@@ -31,19 +31,16 @@ print(logo, end="\n\n")
 if not os.path.exists("config.json"):
     print("Config File Not Found, Please read README.MD")
     exit()
-print("Enter the invterval to run the script: ")
-print("Leave blank to run the script every hour")
 
+# قراءة القيم من Environment Variables بدلاً من input()
+hours = int(os.environ.get("INTERVAL_HOURS", 1))
+minutes = int(os.environ.get("INTERVAL_MINUTES", 0))
+seconds = int(os.environ.get("INTERVAL_SECONDS", 0))
 
-# if user leave it blank assgin 1 to hours
-hours = int(input("Hours: ") or 1)
-
-# if user leave it blank assgin 0 to minutes and seconds
-minutes = int(input("Minutes: ") or 0)
-seconds = int(input("Seconds: ") or 0)
+print(f"Running every {hours}h:{minutes}m:{seconds}s")
 
 # initialize the scheduler
-scheduler = BlockingScheduler(timezone="asia/kolkata")
+scheduler = BlockingScheduler(timezone="Asia/Kolkata")
 
 # add the job to the scheduler
 scheduler.add_job(
